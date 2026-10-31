@@ -24,8 +24,9 @@ A [Muse Code](https://meta.ai) plugin that makes Muse feel at home in the
 | Rex, with `rex` on your `PATH` | Session context comes from `rex __internal session-start` |
 | `sh`, `awk`, `ps` | The hook is plain POSIX sh. No `jq` or Python needed |
 
-Works with Meta's launcher (`~/.local/bin/muse`), mise installs, and packaged
-installs such as Arch's `muse-code-bin`.
+Works with Meta's launcher wherever it lives (`~/.local/bin`, mise, or a
+directory such as `/usr/local/lib/muse`), and with packaged installs such as
+Arch's `muse-code-bin`. Tested in both sandboxed and YOLO sessions.
 
 ## Install
 
