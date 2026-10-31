@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: shellcheck
+        run: shellcheck -s sh install.sh hooks/session-start.sh bin/fix-launcher.sh
+      - name: Manifests are valid JSON
+        run: |
+          jq -e '.name == "rex" and (.capabilities.hooks | length) > 0' .muse-plugin/plugin.json
+          jq -e '.plugins[0].name == "rex"' .claude-plugin/marketplace.json
+      - name: Versions match
+        run: |
+          a=$(jq -r .version .muse-plugin/plugin.json)
+          b=$(jq -r '.plugins[0].version' .claude-plugin/marketplace.json)
+          [ "$a" = "$b" ] || { echo "plugin.json $a != marketplace.json $b"; exit 1; }
+
+  test:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: fix-launcher patches only Meta's launcher
+        run: |
+          set -eu
+          t=$(mktemp -d)
+          printf '#!/bin/sh\nbinary="$HOME/.local/bin/muse-bin-1.0"\n  exec "$binary" "$@"\n' >"$t/muse"
+          printf '#!/bin/sh\n  exec "$binary" "$@"\n' >"$t/other"
+          chmod 755 "$t/muse" "$t/other"
+          HOME=$t sh bin/fix-launcher.sh --check "$t/muse" | grep -q 'needs fixing'
+          HOME=$t sh bin/fix-launcher.sh "$t/muse"
+          grep -qxF '  exec -a muse "$binary" "$@"' "$t/muse"
+          [ -x "$t/muse" ]
+          HOME=$t sh bin/fix-launcher.sh "$t/muse" | grep -q 'already starts Muse'
+          HOME=$t sh bin/fix-launcher.sh "$t/other"
+          grep -qxF '  exec "$binary" "$@"' "$t/other"
+      - name: Hook prints nothing outside Rex
+        run: |
+          out=$(printf '{}' | env -u REX_SESSION sh hooks/session-start.sh)
+          [ -z "$out" ]
+      - name: Scripts parse
+        run: for f in install.sh hooks/session-start.sh bin/fix-launcher.sh; do sh -n "$f"; done

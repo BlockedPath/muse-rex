@@ -35,6 +35,7 @@ while [ -n "$pid" ] && [ "$pid" -gt 1 ] 2>/dev/null; do
 	pid=$(ps -o ppid= -p "$pid" 2>/dev/null | tr -d ' ')
 done
 [ -n "$vars" ] || [ -n "${REX_SESSION:-}" ] || exit 0 # not in Rex
+# shellcheck disable=SC2163 # each $kv is "NAME=value"
 for kv in $vars; do export "$kv"; done
 
 # The process we found is Muse. Meta's launcher sits next to its binary

@@ -5,7 +5,7 @@
 #   curl -fsSL https://raw.githubusercontent.com/BlockedPath/muse-rex/main/install.sh | sh -s -- --uninstall
 set -u
 REPO=BlockedPath/muse-rex
-MARKET=muse-rex
+MARKET="muse-rex"
 PLUGIN=rex
 
 if [ -t 1 ]; then b='\033[1m' r='\033[0m'; else b='' r=''; fi
@@ -29,7 +29,7 @@ command -v rex >/dev/null 2>&1 ||
 	say "warning: rex isn't on PATH; Muse will get its icon but no Rex session context"
 
 # Marketplace: add it, or refresh it if it's already there.
-if "$muse" plugins marketplace list 2>/dev/null | grep -q "^$MARKET[[:space:]]"; then
+if "$muse" plugins marketplace list 2>/dev/null | grep -q "^${MARKET}[[:space:]]"; then
 	"$muse" plugins marketplace update "$MARKET" >/dev/null || die "couldn't update the $MARKET marketplace"
 else
 	"$muse" plugins marketplace add "$MARKET" "$REPO" >/dev/null || die "couldn't add the $MARKET marketplace"

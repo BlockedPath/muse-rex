@@ -24,7 +24,9 @@ for a in "$@"; do
 done
 say() { [ "$quiet" = 1 ] || printf 'muse-rex: %s\n' "$*"; }
 
+# shellcheck disable=SC2016 # literal launcher lines, not expansions
 old='  exec "$binary" "$@"'
+# shellcheck disable=SC2016
 new='  exec -a muse "$binary" "$@"'
 
 # Always check the usual install places too: ~/.local/bin and mise.
@@ -66,8 +68,11 @@ for l in $candidates; do
 	# reading the old file, and the copy keeps the original's mode.
 	tmp="$l.muse-rex.$$"
 	cp -p "$l" "$tmp" 2>/dev/null || continue
-	awk -v old="$old" -v new="$new" '$0 == old { print new; next } { print }' "$l" >"$tmp" &&
-		grep -qxF "$new" "$tmp" && mv -f "$tmp" "$l" || { rm -f "$tmp"; continue; }
+	if ! awk -v old="$old" -v new="$new" '$0 == old { print new; next } { print }' "$l" >"$tmp" ||
+		! grep -qxF "$new" "$tmp" || ! mv -f "$tmp" "$l"; then
+		rm -f "$tmp"
+		continue
+	fi
 	say "fixed $l"
 	status=0
 done

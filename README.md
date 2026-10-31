@@ -2,6 +2,8 @@
 
 <h1 align="center">muse-rex</h1>
 
+<p align="center"><a href="https://github.com/BlockedPath/muse-rex/actions/workflows/ci.yml"><img src="https://github.com/BlockedPath/muse-rex/actions/workflows/ci.yml/badge.svg" alt="CI"></a></p>
+
 ![Two Muse Code panes in Rex, each with Muse's icon. Both renamed the Rex session from the context the plugin gives them; the right pane is still working.](assets/banner.png)
 
 A [Muse Code](https://meta.ai) plugin that makes Muse feel at home in the
