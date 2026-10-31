@@ -1,4 +1,6 @@
-# muse-rex
+<p align="center"><img src="assets/icon.png" alt="muse-rex icon" width="128"></p>
+
+<h1 align="center">muse-rex</h1>
 
 ![Two Muse Code panes in Rex, each with Muse's icon. Both renamed the Rex session from the context the plugin gives them; the right pane is still working.](assets/banner.png)
 
