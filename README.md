@@ -1,5 +1,7 @@
 # muse-rex
 
+![Two Muse Code panes in Rex, each with Muse's icon. Both renamed the Rex session from the context the plugin gives them; the right pane is still working.](assets/banner.png)
+
 A [Muse Code](https://meta.ai) plugin that makes Muse feel at home in the
 [Rex](https://www.superlogical.com/rex) terminal multiplexer, on macOS and Linux.
 
