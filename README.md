@@ -30,43 +30,47 @@ installs such as Arch's `muse-code-bin`.
 ## Install
 
 ```sh
-muse plugins marketplace add muse-rex https://github.com/BlockedPath/muse-rex
+curl -fsSL https://raw.githubusercontent.com/BlockedPath/muse-rex/main/install.sh | sh
+```
+
+That's it. Start Muse in a Rex pane. The script:
+
+1. adds this repo as a Muse plugin marketplace (`muse-rex`) and installs the
+   `rex` plugin from it,
+2. trusts the plugin's one hook with `muse plugins approve rex` (Muse doesn't
+   run third-party hooks until you do),
+3. applies the launcher fix, so the icon shows from the next launch.
+
+It's safe to run again, and running it again is also how you update. Read
+[`install.sh`](install.sh), [`hooks/session-start.sh`](hooks/session-start.sh),
+and [`bin/fix-launcher.sh`](bin/fix-launcher.sh) first if you like; they are
+short.
+
+For Rex's full usage guide, Muse should also have a `rex` skill. The installer
+tells you if `muse skills list` doesn't show one; `rex skill setup` installs it
+into `~/.agents/skills`, where Muse finds it.
+
+### By hand
+
+```sh
+muse plugins marketplace add muse-rex BlockedPath/muse-rex
 muse plugins install rex@muse-rex
 muse plugins approve rex
 ```
 
-`approve` is required. Muse doesn't run hooks from third-party plugins until
-you trust them. Read [`hooks/session-start.sh`](hooks/session-start.sh) and
-[`bin/fix-launcher.sh`](bin/fix-launcher.sh) first if you like; they are short.
-
-For Rex's usage guide, check that `muse skills list` shows a `rex` skill. If it
-doesn't, run `rex skill setup`, which installs Rex's skill into
-`~/.agents/skills`, where Muse finds it. Without the skill, the session context
-still tells Muse to run `rex skill show` for the guide.
-
-Start a new Muse session in Rex. The icon appears from the second launch on
-(see below), or right away if you run the fix once yourself:
-
-```sh
-curl -fsSL https://raw.githubusercontent.com/BlockedPath/muse-rex/main/bin/fix-launcher.sh | sh
-```
-
-### From a clone
-
-```sh
-git clone https://github.com/BlockedPath/muse-rex
-muse plugins install ./muse-rex
-muse plugins approve rex
-```
+The icon then appears from the second launch, after the hook has fixed the
+launcher once.
 
 ## Update and remove
 
 ```sh
-muse plugins marketplace update muse-rex && muse plugins update rex && muse plugins approve rex
-muse plugins remove rex && muse plugins marketplace remove muse-rex
+curl -fsSL https://raw.githubusercontent.com/BlockedPath/muse-rex/main/install.sh | sh                  # update
+curl -fsSL https://raw.githubusercontent.com/BlockedPath/muse-rex/main/install.sh | sh -s -- --uninstall # remove
 ```
 
-An update changes the hook's definition, so approve it again.
+By hand: `muse plugins marketplace update muse-rex && muse plugins update rex && muse plugins approve rex`
+to update (an update changes the hook, so approve it again), and
+`muse plugins remove rex && muse plugins marketplace remove muse-rex` to remove.
 
 ## How the icon works
 
