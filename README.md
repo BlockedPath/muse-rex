@@ -1,4 +1,4 @@
-<p align="center"><img src="assets/icon.png" alt="muse-rex icon" width="128"></p>
+<p align="center"><img src="assets/icon.png" alt="Meta logo" width="128"></p>
 
 <h1 align="center">muse-rex</h1>
 
@@ -128,3 +128,7 @@ at launch, so the context and the launcher fix arrive then.
 ## License
 
 MIT
+
+This is a community project, not affiliated with or endorsed by Meta or
+Superlogical. Meta, the Meta logo, and Muse Code are trademarks of Meta
+Platforms, Inc.; Rex is Superlogical's.
