@@ -46,7 +46,7 @@ Start a new Muse session in Rex. The icon appears from the second launch on
 (see below), or right away if you run the fix once yourself:
 
 ```sh
-sh ~/.local/share/muse/plugins/cache/local/rex/*/package/bin/fix-launcher.sh
+curl -fsSL https://raw.githubusercontent.com/BlockedPath/muse-rex/main/bin/fix-launcher.sh | sh
 ```
 
 ### From a clone
