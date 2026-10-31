@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "name": "rex",
+  "displayName": "Rex",
+  "version": "0.1.0",
+  "description": "Makes Muse Code at home in the Rex terminal multiplexer: shows Muse's icon on its pane and tells Muse which Rex session and pane it is running in.",
+  "compat": {
+    "source": "native",
+    "manifestDir": ".muse-plugin"
+  },
+  "capabilities": {
+    "skills": [],
+    "commands": [],
+    "hooks": [
+      {
+        "id": "session-start",
+        "event": "SessionStart",
+        "command": [
+          "sh",
+          "hooks/session-start.sh"
+        ],
+        "timeoutMs": 5000
+      }
+    ],
+    "mcpServers": [],
+    "reminders": []
+  }
+}

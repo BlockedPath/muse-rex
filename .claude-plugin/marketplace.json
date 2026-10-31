@@ -1,0 +1,15 @@
+{
+  "name": "muse-rex",
+  "description": "Rex terminal multiplexer integration for Muse Code",
+  "owner": {
+    "name": "BlockedPath"
+  },
+  "plugins": [
+    {
+      "name": "rex",
+      "description": "Muse's icon on its Rex pane, plus Rex session context so Muse can drive Rex.",
+      "version": "0.1.0",
+      "source": "./"
+    }
+  ]
+}
